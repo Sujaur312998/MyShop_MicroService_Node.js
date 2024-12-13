@@ -14,8 +14,9 @@ class CustomerRepository {
     return customerResult;
   }
 
-  async CreateAddress({ _id, street, postalCode, city, country }) {
+  async CreateAddress(_id, street, postalCode, city, country) {
     const c_profile = await CustomerModel.findById(_id);
+
     if (c_profile) {
       const newAddress = new AddressModel({
         street,
@@ -30,13 +31,10 @@ class CustomerRepository {
     return await c_profile.save();
   }
 
-  async FindCustomer({email}){    
-    const existingCustomer= await CustomerModel.findOne({email:email})
-    // console.log(existingCustomer.toJSON(),"customer-repository")
-    return existingCustomer
+  async FindCustomer({ email }) {
+    const existingCustomer = await CustomerModel.findOne({ email: email });
+    return existingCustomer;
   }
-
 }
 
-
-module.exports= CustomerRepository
+module.exports = CustomerRepository;

@@ -31,7 +31,7 @@ class CustomerService {
       email: email,
       _id: existingCustomer._id,
     });
-    return FormateData({ id: existingCustomer._id, token });
+    return FormateData({ token });
   }
 
   async SignUp(userInputs) {
@@ -51,11 +51,19 @@ class CustomerService {
       email: email,
       _id: existingCustomer._id,
     });
-    return FormateData({ id: existingCustomer._id, token });
+    return FormateData({ token });
   }
 
   async AddAddress(_id, userInputs) {
     const { street, postalCode, city, country } = userInputs;
+    const addressResult = await this.repository.CreateAddress(
+      _id,
+      street,
+      postalCode,
+      city,
+      country
+    );
+    return FormateData(addressResult);
   }
 }
 

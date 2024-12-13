@@ -28,6 +28,19 @@ module.exports.FormateData = async (data) => {
   }
 };
 
-module.exports.validatePassword = async (enteredPassword, savedPassword, salt) =>{
-  return await this.GeneratePassword(enteredPassword,salt) === savedPassword
+module.exports.validatePassword = async (enteredPassword, savedPassword) =>{
+  return await bcrypt.compare(enteredPassword,savedPassword)
+}
+
+module.exports.validateSignature= async(req)=>{
+  try {
+    const token= req.headers['authorization'].split(" ")[1]
+    const payload= await jwt.verify(token,APP_SECRET)
+    req.user = payload;
+    return true
+    
+  } catch (error) {
+    console.log(error);
+    return false
+  }
 }

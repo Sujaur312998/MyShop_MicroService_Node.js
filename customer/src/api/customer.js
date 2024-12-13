@@ -1,4 +1,5 @@
 const CustomerService = require("../service/customer-service");
+const userAuth = require("./middleware/auth");
 
 module.exports = (app) => {
   const service = new CustomerService();
@@ -12,6 +13,19 @@ module.exports = (app) => {
   app.post("/signup", async (req, res, next) => {
     const { email, password, phone } = req.body;
     const { data } = await service.SignUp({ email, password, phone });
+    res.json(data);
+  });
+
+  app.post("/address", userAuth, async (req, res) => {
+    const { _id } = req.user;
+    const { street, postalCode, city, country } = req.body;
+
+    const { data } = await service.AddAddress(_id, {
+      street,
+      postalCode,
+      city,
+      country,
+    });
     res.json(data);
   });
 
