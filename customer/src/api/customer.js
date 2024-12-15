@@ -29,6 +29,18 @@ module.exports = (app) => {
     res.json(data);
   });
 
+  app.get("/profile", userAuth, async (req, res, next) => {
+    const { _id } = req.user;
+    const { data } =await service.GetProfile(_id);
+    res.json(data)
+  });
+
+  app.get('/shoping-details',userAuth, async(req,res,next)=>{
+    const { _id } = req.user;
+    const { data } =await service.GetShoppingDetails(_id)   
+    res.json(data) 
+  })
+
   app.get("/whoami", (req, res, next) => {
     return res.status(200).json({ msg: "/customer : I am Customer Service" });
   });

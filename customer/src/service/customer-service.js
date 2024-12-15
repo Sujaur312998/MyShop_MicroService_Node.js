@@ -65,6 +65,23 @@ class CustomerService {
     );
     return FormateData(addressResult);
   }
+
+  async GetProfile(id) {
+    const existingCustomer = await this.repository.GetProfileDetails(id);
+
+    if (existingCustomer) {
+      return FormateData(existingCustomer);
+    }
+    return FormateData(null);
+  }
+
+  async GetShoppingDetails(id) {
+    const existingCustomer = await this.repository.GetProfileDetails(id)
+    if (existingCustomer) {
+      return FormateData(existingCustomer);
+    }
+    return FormateData(null);
+  }
 }
 
 module.exports = CustomerService;

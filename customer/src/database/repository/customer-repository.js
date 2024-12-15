@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { CustomerModel, AddressModel } = require("../model");
 
 //Dealing with DB operation
@@ -35,6 +34,13 @@ class CustomerRepository {
     const existingCustomer = await CustomerModel.findOne({ email: email });
     return existingCustomer;
   }
+
+  async GetProfileDetails(id){
+    const existingCustomer= await CustomerModel.findById(id).populate('address')
+    return existingCustomer
+  }
+
+  // async 
 }
 
 module.exports = CustomerRepository;
